@@ -113,7 +113,7 @@ const Home = () => {
 
     if (window.ethereum !== 'undefined') {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
-      await sdk.wallet.connect(provider);
+      await sdk.wallet.connect(provider, 'ethereum');
     } else {
       alert("Provider is not available");
       return;
@@ -121,7 +121,7 @@ const Home = () => {
     
     // console.log('api:', sdk.api); return;
 
-    const transactions = await sdk.wallet.getTransactions();
+    const transactions = await sdk.wallet.getTransactions(account);
 
     console.log('Tx list:', transactions);
     // Alert your user to take action on any transactions require a claim
@@ -153,7 +153,7 @@ const Home = () => {
     const transferRoute = quote.routes[2].route;
 
     console.log('Sending transfer...', transferRoute);
-    await sdk.transfer(transferRoute, transferParams);
+    await sdk.transfer(quote.routes[2], transferParams);
   };
 
   return (
